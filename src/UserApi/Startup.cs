@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using UserApi.Repositories;
+using Microsoft.OpenApi.Models;
 
 namespace UserApi
 {
@@ -36,6 +37,11 @@ namespace UserApi
 
             services.AddTransient<IUserRepository, UserRepository>();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "User API", Version = "v1" });
+            });
+
             _services = services;
         }
 
@@ -52,6 +58,12 @@ namespace UserApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
