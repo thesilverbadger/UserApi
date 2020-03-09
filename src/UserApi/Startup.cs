@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using UserApi.Repositories;
 
 namespace UserApi
 {
@@ -22,10 +24,19 @@ namespace UserApi
 
         public IConfiguration Configuration { get; }
 
+        private IServiceCollection _services;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Use an in-memory database for testing
+            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("Users"));
+
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            _services = services;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +57,9 @@ namespace UserApi
             {
                 endpoints.MapControllers();
             });
+
+            var context = _services.BuildServiceProvider().GetService<DataContext>();
+            DatabaseInitialiser.Initialise(context);
         }
     }
 }
