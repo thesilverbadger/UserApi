@@ -10,7 +10,7 @@ namespace UserApi.Repositories
 
         Task<UserDto> CreateAsync(UserDto userDto);
 
-        Task<UserDto> UpdateAsync(UserDto userDto);
+        Task UpdateAsync(UserDto userDto);
 
         Task DeleteAsync(int id);
     }

@@ -65,9 +65,18 @@ namespace UserApi.Repositories
             return null;
         }
 
-        public Task<UserDto> UpdateAsync(UserDto userDto)
+        public async Task UpdateAsync(UserDto userDto)
         {
-            throw new NotImplementedException();
+            var user = await _db.Users.SingleOrDefaultAsync(x => x.Id == userDto.Id);
+
+            if (user != null)
+            {
+                user.Email = userDto.Email;
+                user.FamilyName = userDto.FamilyName;
+                user.GivenName = userDto.GivenName;
+
+                await _db.SaveChangesAsync();
+            }
         }
     }
 }

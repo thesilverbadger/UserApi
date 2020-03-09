@@ -58,5 +58,19 @@ namespace UserApi.Tests
             var newUser = await repo.GetAsync(user.Id);
             Assert.IsNotNull(newUser);
         }
+
+        [Test]
+        public async Task Update_User()
+        {
+            IUserRepository repo = new UserRepository(context);
+            var user = await repo.GetAsync(2);
+
+            user.FamilyName = "Turing";
+            await repo.UpdateAsync(user);
+
+            var updatedUser = await repo.GetAsync(2);
+
+            Assert.IsTrue(updatedUser.FamilyName == user.FamilyName);
+        }
     }
 }
