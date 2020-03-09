@@ -5,7 +5,7 @@ using UserApi.Repositories;
 
 namespace UserApi.Tests
 {
-    public class Tests
+    public class UserRepositoryTests
     {
         private DataContext context;
 
