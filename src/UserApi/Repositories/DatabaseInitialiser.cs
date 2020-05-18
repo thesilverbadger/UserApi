@@ -8,6 +8,7 @@ namespace UserApi.Repositories
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+            //Users
             context.Users.Add(new Models.User()
             {
                 Id = 1,
@@ -33,6 +34,14 @@ namespace UserApi.Repositories
                 Email = "sam.smith@home.net",
                 FamilyName = "Smith",
                 GivenName = "Sam"
+            });
+
+            //Clients
+            context.Clients.Add(new Models.Client()
+            {
+                Id = 1,
+                Name = "client1",
+                Key = "password"
             });
 
             context.SaveChanges();

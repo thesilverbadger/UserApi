@@ -3,8 +3,8 @@ namespace UserApi.Dto
 {
     public class CredentialDto
     {
-        public string Username { get; set; }
+        public string ClientName { get; set; }
 
-        public string Password { get; set; }
+        public string Key { get; set; }
     }
 }

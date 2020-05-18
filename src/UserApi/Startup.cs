@@ -39,6 +39,7 @@ namespace UserApi
             services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("Users"));
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IClientRepository, ClientRepository>();
 
             services.AddSwaggerGen(c =>
             {

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using UserApi.Dto;
+using UserApi.Repositories;
 
 namespace UserApi.Api
 {
@@ -18,10 +19,12 @@ namespace UserApi.Api
     public class AuthorizationController : ControllerBase
     {
         private IConfiguration _config;
+        private readonly IClientRepository _clientRepository;
 
-        public AuthorizationController(IConfiguration config)
+        public AuthorizationController(IConfiguration config, IClientRepository clientRepository)
         {
             _config = config;
+            _clientRepository = clientRepository;
         }
 
         [HttpPost]
@@ -29,11 +32,15 @@ namespace UserApi.Api
         [AllowAnonymous]
         public async Task<ActionResult<TokenDto>> GetToken([FromBody] CredentialDto credentialDto)
         {
-            //TODO: Remove once we're asynchronously getting the callee
-            await Task.FromResult(0);
+            var client = await _clientRepository.GetClientByNameAsync(credentialDto.ClientName);
 
-            //TODO: Validate username/password
-            if (credentialDto.Username != credentialDto.Password)
+            if (client == null)
+            {
+                return Unauthorized();
+            }
+
+            //Validate username/password
+            if (client.Key != credentialDto.Key)
             {
                 return Unauthorized();
             }
@@ -55,7 +62,7 @@ namespace UserApi.Api
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, credentialDto.Username, ClaimValueTypes.String, _config["Jwt:Issuer"])
+                new Claim(ClaimTypes.NameIdentifier, credentialDto.ClientName, ClaimValueTypes.String, _config["Jwt:Issuer"])
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

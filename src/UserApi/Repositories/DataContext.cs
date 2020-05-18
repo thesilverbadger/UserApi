@@ -14,5 +14,6 @@ namespace UserApi.Repositories
         { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
     }
 }
