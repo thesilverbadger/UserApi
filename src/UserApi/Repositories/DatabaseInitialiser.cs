@@ -41,7 +41,7 @@ namespace UserApi.Repositories
             {
                 Id = 1,
                 Name = "client1",
-                Key = "password"
+                Key = BCrypt.Net.BCrypt.HashPassword("password")
             });
 
             context.SaveChanges();
