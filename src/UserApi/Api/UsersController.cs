@@ -22,6 +22,13 @@ namespace UserApi.Api
             _userRepository = userRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var users = await _userRepository.GetAsync();
+            return Ok(users);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
