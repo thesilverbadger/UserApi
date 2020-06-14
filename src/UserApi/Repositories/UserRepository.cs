@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,18 @@ namespace UserApi.Repositories
             }
 
             return null;
+        }
+
+        public async Task<List<UserDto>> GetAsync()
+        {
+            return await _db.Users.Select(x => new UserDto()
+            {
+                Created = x.Created,
+                Email = x.Email,
+                FamilyName = x.FamilyName,
+                GivenName = x.GivenName,
+                Id = x.Id
+            }).ToListAsync();
         }
 
         public async Task UpdateAsync(UserDto userDto)
