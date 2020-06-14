@@ -48,6 +48,17 @@ namespace UserApi
 
             AddOAuth(services);
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("all",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
             _services = services;
         }
 
@@ -80,6 +91,7 @@ namespace UserApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("all");
 
             app.UseAuthentication();
             app.UseAuthorization();
