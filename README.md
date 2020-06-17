@@ -18,5 +18,5 @@ https://download.visualstudio.microsoft.com/download/pr/3533d626-4784-4944-9d3a-
 Swagger is available at https://localhost:5001/swagger/v1/swagger.json, and Swagger-UI at https://localhost:5001/swagger/index.html
 
 # TODO
-1) Authentication & authorisation!
+~~1) Authentication & authorisation!~~ DONE <br/>
 2) Logging and monitoring including error handling

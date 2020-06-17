@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using UserApi.Api;
 using UserApi.Repositories;
 
 namespace UserApi.Tests
@@ -37,6 +38,17 @@ namespace UserApi.Tests
             var client = await repo.GetClientByNameAsync("client2");
 
             Assert.IsNull(client);
+        }
+
+        [Test]
+        public async Task ValidateClient()
+        {
+            //TODO: This needs a mocked IConfiguration to pass
+            var authorizationController = new AuthorizationController(null, new ClientRepository(context));
+
+            var result = await authorizationController.GetToken(new Dto.CredentialDto() { ClientName = "client1", Key = "password" });
+
+            Assert.IsNotNull(result.Value);
         }
     }
 }

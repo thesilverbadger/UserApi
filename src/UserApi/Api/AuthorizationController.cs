@@ -40,21 +40,21 @@ namespace UserApi.Api
             }
 
             //Validate username/password
-            if (client.Key != credentialDto.Key)
+            if (BCrypt.Net.BCrypt.Verify(credentialDto.Key, client.Key))
             {
-                return Unauthorized();
+                //Build token
+                var validity = 120;
+                var expires = DateTime.UtcNow.AddMinutes(validity);
+                var tokenData = new TokenDto()
+                {
+                    Token = BuildToken(credentialDto, validity),
+                    ExpiryUtc = expires
+                };
+
+                return Ok(tokenData);
             }
 
-            //Build token
-            var validity = 120;
-            var expires = DateTime.UtcNow.AddMinutes(validity);
-            var tokenData = new TokenDto()
-            {
-                Token = BuildToken(credentialDto, validity),
-                ExpiryUtc = expires
-            };
-
-            return Ok(tokenData);
+            return Unauthorized();
         }
 
 
