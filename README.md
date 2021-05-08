@@ -2,8 +2,7 @@
 Demo user api with EF In-Memory and unit tests
 
 # Requirements
-.NET Core 3.1
-https://download.visualstudio.microsoft.com/download/pr/3533d626-4784-4944-9d3a-e62b9b46d11a/770e2b9c1a40546a19e063c39996fe7d/dotnet-sdk-3.1.102-osx-x64.pkg
+.NET 5.0
 
 # Firstrun
 `dotnet build` from the root of the solution
