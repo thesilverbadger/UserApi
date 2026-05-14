@@ -26,7 +26,7 @@ namespace UserApi.Tests
             IUserRepository repo = new UserRepository(context);
             var user = await repo.GetAsync(1);
 
-            Assert.IsNotNull(user);
+            Assert.That(user, Is.Not.Null);
         }
 
         [Test]
@@ -34,12 +34,12 @@ namespace UserApi.Tests
         {
             IUserRepository repo = new UserRepository(context);
             var user = await repo.GetAsync(3);
-            Assert.IsNotNull(user);
+            Assert.That(user, Is.Not.Null);
 
             await repo.DeleteAsync(3);
 
             user = await repo.GetAsync(3);
-            Assert.IsNull(user);
+            Assert.That(user, Is.Null);
         }
 
         [Test]
@@ -53,10 +53,10 @@ namespace UserApi.Tests
                 FamilyName = "Jones"
             });
 
-            Assert.IsNotNull(user);
+            Assert.That(user, Is.Not.Null);
 
             var newUser = await repo.GetAsync(user.Id);
-            Assert.IsNotNull(newUser);
+            Assert.That(newUser, Is.Not.Null);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace UserApi.Tests
 
             var updatedUser = await repo.GetAsync(2);
 
-            Assert.IsTrue(updatedUser.FamilyName == user.FamilyName);
+            Assert.That(updatedUser.FamilyName, Is.EqualTo(user.FamilyName));
         }
     }
 }
