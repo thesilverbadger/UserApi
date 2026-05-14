@@ -2,7 +2,7 @@
 Demo user api with EF In-Memory and unit tests
 
 # Requirements
-.NET 5.0
+.NET 10
 
 # Firstrun
 `dotnet build` from the root of the solution
@@ -12,9 +12,6 @@ Demo user api with EF In-Memory and unit tests
 
 # Running Tests
 `cd tests/UserApi.Tests/` then `dotnet test`
-
-# API
-Swagger is available at https://localhost:5001/swagger/v1/swagger.json, and Swagger-UI at https://localhost:5001/swagger/index.html
 
 # TODO
 ~~1) Authentication & authorisation!~~ DONE <br/>
